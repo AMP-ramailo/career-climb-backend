@@ -1,16 +1,21 @@
-
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-  googleLogin(req) {
+  public async googleLogin(req, res) {
+    // use other id generator
     if (!req.user) {
-      return 'No user from google'
+      return 'No user from google';
     }
 
-    return {
-      message: 'User information from google',
-      user: req.user
-    }
+    // save this data to database
+    // return user_id
+
+    const user_id = new Date().getTime();
+    console.log('req', req.user);
+    // add this to the database
+
+    // redirect to frontend
+    res.redirect(`http://localhost:3000/auth/google/success/${user_id}`);
   }
 }
