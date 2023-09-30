@@ -42,7 +42,14 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -474,6 +481,10 @@
         "required": [
           "role"
         ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {}
       },
       "CreateScheduleDto": {
         "type": "object",
