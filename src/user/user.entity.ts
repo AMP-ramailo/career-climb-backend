@@ -5,12 +5,12 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({type:'varchar', length:200})
   name: string;
 
-  @Column()
+  @Column({type:'varchar', length:200, unique:true})
   email: string;
 
-  @Column()
+  @Column({type:'varchar', length:200})
   image_url: string;
 }

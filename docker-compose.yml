@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: career-climb-backend
     ports:
-      - "3000:3000" # Adjust the port as needed
+      - "8080:8080" # Adjust the port as needed
     env_file:
       - .env # Use the .env file for environment variables
     depends_on:

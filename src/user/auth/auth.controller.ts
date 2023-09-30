@@ -1,5 +1,5 @@
 // auth.controller.ts
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.services';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
@@ -7,7 +7,8 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('google')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  @Get()
+  
+  @Post()
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {}
 
