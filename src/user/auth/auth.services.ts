@@ -1,5 +1,5 @@
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../user.entity';
@@ -12,14 +12,25 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
-  async validateUser(username: string, password: string): Promise<any> {
-    // Implement your own user validation logic here (e.g., with Sequelize).
+  async validateUser(userId:number): Promise<User> {
+   return await this.usersService.findById(userId);
+  }
+  async invalidateToken(accessToken: string): Promise<void> {
+    try {
+      const decoded = await this.jwtService.verifyAsync(accessToken);
+
+      // Check if the token has expired
+      const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+      if (decoded.exp && decoded.exp < currentTimeInSeconds) {
+        throw new UnauthorizedException('Token has expired');
+      }
+
+      return decoded;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid access token');
+    }
   }
 
-  async findOrCreateGoogleUser(profile: any): Promise<any> {
-    // Implement logic to find or create a user based on the Google profile.
-    // Save the user to your database (with Sequelize).
-  }
 
   async login(req, rsp):Promise<any> {
     try {
