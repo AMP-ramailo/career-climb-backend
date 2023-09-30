@@ -5,6 +5,8 @@ import { User } from '../user/user.entity';
 import { Schedule } from 'src/schedule/entities/schedule.entity';
 import { Applicant } from 'src/applicant/entities/applicant.entity';
 import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
+import { Skill } from 'src/skill/entities/skill.entity';
+import { UserSkill } from 'src/helpers/linking_entities/user-skill.entity';
 export const databaseProviders = [
   {
     provide: SEQUELIZE,
@@ -24,7 +26,14 @@ export const databaseProviders = [
           config = databaseConfig.development;
       }
       const sequelize = new Sequelize(config);
-      sequelize.addModels([User, Schedule, Applicant, Interviewer]);
+      sequelize.addModels([
+        User,
+        Schedule,
+        Applicant,
+        Interviewer,
+        Skill,
+        UserSkill,
+      ]);
       await sequelize.sync({ alter: true });
       return sequelize;
     },

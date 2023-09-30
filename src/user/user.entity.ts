@@ -1,5 +1,7 @@
 import {
   AutoIncrement,
+  BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   Default,
@@ -13,6 +15,8 @@ import { UserType } from 'src/helpers';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { Applicant } from 'src/applicant/entities/applicant.entity';
 import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
+import { Skill } from 'src/skill/entities/skill.entity';
+import { UserSkill } from '../helpers/linking_entities/user-skill.entity';
 
 @Table({ tableName: 'users', timestamps: true })
 export class User extends Model<User> {
@@ -44,4 +48,7 @@ export class User extends Model<User> {
 
   @HasOne(() => Interviewer)
   interviewer: Interviewer;
+
+  @BelongsToMany(() => Skill, () => UserSkill)
+  skills: Skill[];
 }
