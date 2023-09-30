@@ -1,5 +1,5 @@
 // auth.controller.ts
-import { Controller, Post, Body,Request, NotFoundException, UseGuards  } from '@nestjs/common';
+import { Controller, Post,Get, Body,Request, NotFoundException, UseGuards  } from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { UsersService } from './user.service';
@@ -25,6 +25,11 @@ export class UserController {
     await user.save(); // Save the updated user to the database
 
     return { message: 'your role updated successfully', user: user };
+  }
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async self(@Request() req) {
+    return { user:  req.user };
   }
 
 }

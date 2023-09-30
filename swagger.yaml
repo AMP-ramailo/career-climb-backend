@@ -36,6 +36,20 @@
         ]
       }
     },
+    "/user/me": {
+      "get": {
+        "operationId": "UserController_self",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
     "/google": {
       "get": {
         "operationId": "AuthController_googleAuth",
@@ -91,10 +105,27 @@
     "/interviewer-availability/get-all-schedule/{interviewer_id}": {
       "get": {
         "operationId": "ScheduleController_findAll",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "interviewer_id",
+            "required": true,
+            "in": "path",
+            "schema": {}
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CreateScheduleDto"
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -102,12 +133,12 @@
         ]
       }
     },
-    "/interviewer-availability/{id}": {
+    "/interviewer-availability/{availability_id}": {
       "get": {
         "operationId": "ScheduleController_findOne",
         "parameters": [
           {
-            "name": "id",
+            "name": "availability_id",
             "required": true,
             "in": "path",
             "schema": {
@@ -117,7 +148,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateScheduleDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -128,7 +166,7 @@
         "operationId": "ScheduleController_remove",
         "parameters": [
           {
-            "name": "id",
+            "name": "availability_id",
             "required": true,
             "in": "path",
             "schema": {
@@ -170,12 +208,12 @@
         ]
       }
     },
-    "/applicant-profile/get-profile/{id}": {
+    "/applicant-profile/get-profile/{user_id}": {
       "get": {
         "operationId": "ApplicantController_getProfile",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "required": true,
             "in": "path",
             "schema": {
@@ -185,7 +223,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApplicantDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -193,12 +238,12 @@
         ]
       }
     },
-    "/applicant-profile/get-social/{id}": {
+    "/applicant-profile/get-social/{user_id}": {
       "get": {
         "operationId": "ApplicantController_getSocial",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "required": true,
             "in": "path",
             "schema": {
@@ -208,7 +253,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocialProfileResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -216,12 +268,12 @@
         ]
       }
     },
-    "/applicant-profile/get-personal/{id}": {
+    "/applicant-profile/get-personal/{user_id}": {
       "get": {
         "operationId": "ApplicantController_getPersonal",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "required": true,
             "in": "path",
             "schema": {
@@ -231,7 +283,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalProfileResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -239,12 +298,12 @@
         ]
       }
     },
-    "/applicant-profile/{id}": {
+    "/applicant-profile/{user_id}": {
       "patch": {
         "operationId": "ApplicantController_update",
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "required": true,
             "in": "path",
             "schema": {
@@ -269,6 +328,123 @@
         },
         "tags": [
           "applicant-profile"
+        ]
+      }
+    },
+    "/interviewer-profile": {
+      "post": {
+        "operationId": "InterviewerController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInterviewerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-profile"
+        ]
+      }
+    },
+    "/interviewer-profile/get-profile/{user_id}": {
+      "get": {
+        "operationId": "InterviewerController_getProfile",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateInterviewerDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "interviewer-profile"
+        ]
+      }
+    },
+    "/interviewer-profile/get-personal/{user_id}": {
+      "get": {
+        "operationId": "InterviewerController_getPersonal",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewerProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "interviewer-profile"
+        ]
+      }
+    },
+    "/interviewer-profile/{user_id}": {
+      "patch": {
+        "operationId": "InterviewerController_update",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInterviewerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-profile"
         ]
       }
     }
@@ -370,6 +546,140 @@
           "rating",
           "user_id"
         ]
+      },
+      "SocialProfileResponse": {
+        "type": "object",
+        "properties": {
+          "linkedin_url": {
+            "type": "string"
+          },
+          "github_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "linkedin_url",
+          "github_url"
+        ]
+      },
+      "PersonalProfileResponse": {
+        "type": "object",
+        "properties": {
+          "dob": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dob",
+          "address",
+          "phone"
+        ]
+      },
+      "CreateInterviewerDto": {
+        "type": "object",
+        "properties": {
+          "experience": {
+            "type": "number"
+          },
+          "interview_count": {
+            "type": "number"
+          },
+          "dob": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "current_company": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "user_id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "experience",
+          "interview_count",
+          "dob",
+          "address",
+          "phone",
+          "current_company",
+          "price",
+          "rating",
+          "user_id"
+        ]
+      },
+      "InterviewerProfileResponse": {
+        "type": "object",
+        "properties": {
+          "dob": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "dob",
+          "address",
+          "phone",
+          "price"
+        ]
+      },
+      "UpdateInterviewerDto": {
+        "type": "object",
+        "properties": {
+          "experience": {
+            "type": "number"
+          },
+          "interview_count": {
+            "type": "number"
+          },
+          "dob": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "current_company": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "user_id": {
+            "type": "number"
+          }
+        }
       }
     }
   }
