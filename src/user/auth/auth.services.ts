@@ -1,4 +1,3 @@
-
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../user.service';
 import { JwtService } from '@nestjs/jwt';
@@ -61,5 +60,6 @@ export class AuthService {
     throw new Error('Login failed'); // You can customize the error handling as needed
   }
     
+
   }
 }
