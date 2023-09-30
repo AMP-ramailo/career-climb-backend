@@ -1,15 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('interviewer-availability')
 @Controller('interviewer-availability')
@@ -24,17 +16,22 @@ export class ScheduleController {
   }
 
   @Get('get-all-schedule/:interviewer_id')
+  @ApiParam({ name: 'interviewer_id', required: true })
+  @ApiOkResponse({ type: CreateScheduleDto, isArray: true })
   async findAll(@Param() interviewer_id: number) {
     return await this.scheduleService.findAll(interviewer_id);
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.scheduleService.findOne(+id);
+  @Get(':availability_id')
+  @ApiParam({ name: 'availability_id', required: true })
+  @ApiOkResponse({ type: CreateScheduleDto })
+  async findOne(@Param('availability_id') availability_id: string) {
+    return await this.scheduleService.findOne(+availability_id);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return await this.scheduleService.remove(+id);
+  @Delete(':availability_id')
+  @ApiParam({ name: 'availability_id', required: true })
+  async remove(@Param('availability_id') availability_id: string) {
+    return await this.scheduleService.remove(+availability_id);
   }
 }
