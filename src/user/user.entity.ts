@@ -12,6 +12,7 @@ import {
 import { UserType } from 'src/helpers';
 import { Schedule } from '../schedule/entities/schedule.entity';
 import { Applicant } from 'src/applicant/entities/applicant.entity';
+import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
 
 @Table({ tableName: 'users', timestamps: true })
 export class User extends Model<User> {
@@ -40,4 +41,7 @@ export class User extends Model<User> {
 
   @HasOne(() => Applicant)
   applicant: Applicant;
+
+  @HasOne(() => Interviewer)
+  interviewer: Interviewer;
 }

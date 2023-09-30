@@ -31,7 +31,6 @@ export class AuthService {
     }
   }
 
-
   async login(req, rsp): Promise<any> {
     try {
       const userData = await this.usersService.findByEmail(req.user.email);
