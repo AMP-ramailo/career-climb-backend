@@ -3,12 +3,18 @@ import { Controller, Post,Get, Body,Request, NotFoundException, UseGuards, Unaut
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiOkResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './user.service';
-import { UpdateUserRoleDto } from './role.dto';
+import { UpdateUserRoleDto } from './dto/role.dto';
 import { User } from './user.entity';
+import { UserType } from 'src/helpers/constants';
+import { ApplicantService } from 'src/applicant/applicant.service';
+import { SelfResponseDto } from './dto/self.dto';
+import { InterviewerService } from 'src/interviewer/interviewer.service';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userSevices: UsersService) {}
+  constructor(private readonly userSevices: UsersService,
+    private readonly applicantService: ApplicantService,
+    private readonly interviewerService: InterviewerService) {}
 
   @Post('change-role')
   @UseGuards(JwtAuthGuard)
@@ -27,14 +33,43 @@ export class UserController {
 
     return { message: 'your role updated successfully', user: user };
   }
-  @ApiOkResponse({ type: User, isArray: false })
+  @ApiOkResponse({ type: SelfResponseDto, isArray: false })
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async self(@Request() req) {
-    const user = await this.userSevices.findById(req.user.id);
-    if (!user) {
-      throw new UnauthorizedException("User not found");
+    const userResponse :SelfResponseDto = new SelfResponseDto();
+  
+    userResponse.id= req.user.id;
+    userResponse.email= req.user.email;
+    userResponse.name = req.user.name;
+    userResponse.image_url = req.user.image_url;
+    userResponse.role = req.user.role;
+    userResponse.createAt = req.user.createdAt;
+    userResponse.updateAt = req.user.updateAt;
+    if (req.user.role == UserType.USER){
+      const applicantProfile = await this.applicantService.getPersonalProfile(req.user.id)
+      if (applicantProfile){
+        userResponse.hasProfile = true;
+      }else{
+        userResponse.hasProfile = false;
+      }
+    }else {
+      const profile = await this.interviewerService.getPersonalProfile(req.user.id)
+      if (profile){
+        userResponse.hasProfile = true;
+      }else{
+        userResponse.hasProfile = false;
+      }
     }
+   
+    return   userResponse ;
+  }
+  @ApiOkResponse({ type: User, isArray: true })
+  @Get('applicant')
+  @UseGuards(JwtAuthGuard)
+  async getApplicant(@Request() req) {
+    const user = await this.userSevices.getUsersRoleUser();
+   
     return   user ;
   }
 }

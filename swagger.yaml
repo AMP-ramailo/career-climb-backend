@@ -46,7 +46,31 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/SelfResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/applicant": {
+      "get": {
+        "operationId": "UserController_getApplicant",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
                 }
               }
             }
@@ -82,112 +106,6 @@
         },
         "tags": [
           "auth"
-        ]
-      }
-    },
-    "/interviewer-availability": {
-      "post": {
-        "operationId": "ScheduleController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateScheduleDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "interviewer-availability"
-        ]
-      }
-    },
-    "/interviewer-availability/get-all-schedule/{interviewer_id}": {
-      "get": {
-        "operationId": "ScheduleController_findAll",
-        "parameters": [
-          {
-            "name": "interviewer_id",
-            "required": true,
-            "in": "path",
-            "schema": {}
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CreateScheduleDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "interviewer-availability"
-        ]
-      }
-    },
-    "/interviewer-availability/{availability_id}": {
-      "get": {
-        "operationId": "ScheduleController_findOne",
-        "parameters": [
-          {
-            "name": "availability_id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateScheduleDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "interviewer-availability"
-        ]
-      },
-      "delete": {
-        "operationId": "ScheduleController_remove",
-        "parameters": [
-          {
-            "name": "availability_id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "interviewer-availability"
         ]
       }
     },
@@ -454,6 +372,262 @@
           "interviewer-profile"
         ]
       }
+    },
+    "/interviewer-availability": {
+      "post": {
+        "operationId": "ScheduleController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      }
+    },
+    "/interviewer-availability/get-all-schedule/{interviewer_id}": {
+      "get": {
+        "operationId": "ScheduleController_findAll",
+        "parameters": [
+          {
+            "name": "interviewer_id",
+            "required": true,
+            "in": "path",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CreateScheduleDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      }
+    },
+    "/interviewer-availability/{availability_id}": {
+      "get": {
+        "operationId": "ScheduleController_findOne",
+        "parameters": [
+          {
+            "name": "availability_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateScheduleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      },
+      "delete": {
+        "operationId": "ScheduleController_remove",
+        "parameters": [
+          {
+            "name": "availability_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      }
+    },
+    "/skill": {
+      "post": {
+        "operationId": "SkillController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "skill"
+        ]
+      },
+      "get": {
+        "operationId": "SkillController_findAll",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AllSkillResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "skill"
+        ]
+      }
+    },
+    "/skill/find-skill-of-user/{user_id}": {
+      "get": {
+        "operationId": "SkillController_findOne",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserSkillResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "skill"
+        ]
+      }
+    },
+    "/skill/{skill_id}": {
+      "patch": {
+        "operationId": "SkillController_update",
+        "parameters": [
+          {
+            "name": "skill_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "skill"
+        ]
+      }
+    },
+    "/skill/{user_id}/{skill_id}": {
+      "delete": {
+        "operationId": "SkillController_remove",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "skill_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "skill"
+        ]
+      }
     }
   },
   "info": {
@@ -482,33 +656,48 @@
           "role"
         ]
       },
-      "User": {
-        "type": "object",
-        "properties": {}
-      },
-      "CreateScheduleDto": {
+      "SelfResponseDto": {
         "type": "object",
         "properties": {
-          "availability_date": {
-            "format": "date-time",
+          "id": {
+            "type": "number"
+          },
+          "name": {
             "type": "string"
           },
-          "availability_time": {
-            "type": "number"
+          "email": {
+            "type": "string"
           },
-          "status": {
+          "image_url": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "createAt": {
+            "type": "string"
+          },
+          "updateAt": {
+            "type": "string"
+          },
+          "hasProfile": {
             "type": "boolean"
-          },
-          "interviewer_id": {
-            "type": "number"
           }
         },
         "required": [
-          "availability_date",
-          "availability_time",
-          "status",
-          "interviewer_id"
+          "id",
+          "name",
+          "email",
+          "image_url",
+          "role",
+          "createAt",
+          "updateAt",
+          "hasProfile"
         ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {}
       },
       "CreateApplicantDto": {
         "type": "object",
@@ -688,6 +877,97 @@
             "type": "number"
           },
           "user_id": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "availability_date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "availability_time": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "interviewer_id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "availability_date",
+          "availability_time",
+          "status",
+          "interviewer_id"
+        ]
+      },
+      "CreateSkillDto": {
+        "type": "object",
+        "properties": {
+          "skill_name": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "number"
+          },
+          "skill_experience": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "skill_name",
+          "user_id",
+          "skill_experience"
+        ]
+      },
+      "AllSkillResponse": {
+        "type": "object",
+        "properties": {
+          "skill_id": {
+            "type": "number"
+          },
+          "skill_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "skill_id",
+          "skill_name"
+        ]
+      },
+      "UserSkillResponse": {
+        "type": "object",
+        "properties": {
+          "skill_id": {
+            "type": "number"
+          },
+          "skill_name": {
+            "type": "string"
+          },
+          "skill_experience": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "skill_id",
+          "skill_name",
+          "skill_experience"
+        ]
+      },
+      "UpdateSkillDto": {
+        "type": "object",
+        "properties": {
+          "skill_name": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "number"
+          },
+          "skill_experience": {
             "type": "number"
           }
         }
