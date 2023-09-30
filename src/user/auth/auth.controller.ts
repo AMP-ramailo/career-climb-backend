@@ -1,20 +1,24 @@
 // auth.controller.ts
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Res, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.services';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @ApiTags('auth')
 @Controller('google')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
+  @Get('')
   @UseGuards(AuthGuard('google'))
-  async googleAuth() {}
+  async googleLogin() {}
 
   @Get('redirect')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
-    return this.authService.googleLogin(req, res);
+  async googleLoginCallback(@Request() req, @Res() res: Response) {
+    const user = req.user;
+    console.log('suer', user);
+    const token = await this.authService.login(req, res);
+    console.log(token);
+    return { user, ...token };
   }
 }
