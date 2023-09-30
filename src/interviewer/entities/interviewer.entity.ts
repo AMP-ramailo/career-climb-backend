@@ -12,7 +12,7 @@ import {
 import { Interview } from 'src/interview/entities/interview.entity';
 import { User } from 'src/user/user.entity';
 
-@Table({ tableName: 'applicant_profile', timestamps: true })
+@Table({ tableName: 'interviewer_profile', timestamps: true })
 export class Interviewer extends Model<Interviewer> {
   @PrimaryKey
   @AutoIncrement

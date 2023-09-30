@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { Applicant } from 'src/applicant/entities/applicant.entity';
+import { UserType } from 'src/helpers';
+import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +20,9 @@ export class UsersService {
     return User.create(user);
   }
   async getUsersRoleUser(): Promise<User[]> {
-    return User.findAll({include: Applicant});
+    return User.findAll({where:{role : UserType.USER} , include: Applicant});
   }
-
+  async getUsersRoleInterviewer(): Promise<User[]> {
+    return User.findAll({where:{role : UserType.INTERVIEWER} , include: Interviewer});
+  }
 }

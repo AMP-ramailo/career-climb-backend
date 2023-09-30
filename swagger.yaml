@@ -57,30 +57,6 @@
         ]
       }
     },
-    "/user/applicant": {
-      "get": {
-        "operationId": "UserController_getApplicant",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "user"
-        ]
-      }
-    },
     "/google": {
       "get": {
         "operationId": "AuthController_googleAuth",
@@ -273,6 +249,30 @@
         "responses": {
           "201": {
             "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-profile"
+        ]
+      }
+    },
+    "/interviewer-profile/get-all-interviewers": {
+      "get": {
+        "operationId": "InterviewerController_getAllInterviewers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AllInterviewerResponse"
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -628,6 +628,100 @@
           "skill"
         ]
       }
+    },
+    "/interview": {
+      "post": {
+        "operationId": "InterviewController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInterviewDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interview"
+        ]
+      }
+    },
+    "/interview/interviewer-interviews/{interviewer_id}": {
+      "get": {
+        "operationId": "InterviewController_getInterviewerInterview",
+        "parameters": [
+          {
+            "name": "interviewer_id",
+            "required": true,
+            "in": "path",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterviewerResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "interview"
+        ]
+      }
+    },
+    "/interview/applicant_interviewer/{applicant_id}": {
+      "get": {
+        "operationId": "InterviewController_getApplicantInterview",
+        "parameters": [
+          {
+            "name": "applicant_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interviewer_id",
+            "required": true,
+            "in": "path",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicantResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "interview"
+        ]
+      }
     }
   },
   "info": {
@@ -694,10 +788,6 @@
           "updateAt",
           "hasProfile"
         ]
-      },
-      "User": {
-        "type": "object",
-        "properties": {}
       },
       "CreateApplicantDto": {
         "type": "object",
@@ -823,6 +913,45 @@
           "price",
           "rating",
           "user_id"
+        ]
+      },
+      "AllInterviewerResponse": {
+        "type": "object",
+        "properties": {
+          "experience": {
+            "type": "number"
+          },
+          "address": {
+            "type": "string"
+          },
+          "current_company": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "image_url": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "experience",
+          "address",
+          "current_company",
+          "price",
+          "rating",
+          "user"
         ]
       },
       "InterviewerProfileResponse": {
@@ -971,6 +1100,138 @@
             "type": "number"
           }
         }
+      },
+      "CreateInterviewDto": {
+        "type": "object",
+        "properties": {
+          "interview_date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "interview_time": {
+            "type": "number"
+          },
+          "interview_status": {
+            "type": "string"
+          },
+          "payment_id": {
+            "type": "string"
+          },
+          "interviewer_id": {
+            "type": "number"
+          },
+          "applicant_id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "interview_date",
+          "interview_time",
+          "interview_status",
+          "payment_id",
+          "interviewer_id",
+          "applicant_id"
+        ]
+      },
+      "InterviewerResponse": {
+        "type": "object",
+        "properties": {
+          "interview_date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "interview_time": {
+            "type": "number"
+          },
+          "interview_status": {
+            "type": "string"
+          },
+          "interviewer_id": {
+            "type": "number"
+          },
+          "applicant": {
+            "type": "object",
+            "properties": {
+              "github_url": {
+                "type": "string"
+              },
+              "linkedin_url": {
+                "type": "string"
+              },
+              "current_company": {
+                "type": "string"
+              },
+              "experience": {
+                "type": "number"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "interview_date",
+          "interview_time",
+          "interview_status",
+          "interviewer_id",
+          "applicant"
+        ]
+      },
+      "ApplicantResponse": {
+        "type": "object",
+        "properties": {
+          "interview_date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "interview_time": {
+            "type": "number"
+          },
+          "interview_status": {
+            "type": "string"
+          },
+          "applicant_id": {
+            "type": "number"
+          },
+          "interviewer": {
+            "type": "object",
+            "properties": {
+              "current_company": {
+                "type": "string"
+              },
+              "experience": {
+                "type": "number"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "interview_date",
+          "interview_time",
+          "interview_status",
+          "applicant_id",
+          "interviewer"
+        ]
       }
     }
   }

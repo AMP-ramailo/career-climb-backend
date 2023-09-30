@@ -64,12 +64,20 @@ export class UserController {
    
     return   userResponse ;
   }
-  @ApiOkResponse({ type: User, isArray: true })
-  @Get('applicant')
-  @UseGuards(JwtAuthGuard)
-  async getApplicant(@Request() req) {
-    const user = await this.userSevices.getUsersRoleUser();
+  // @ApiOkResponse({ type: User, isArray: true })
+  // @Get('applicant')
+  // @UseGuards(JwtAuthGuard)
+  // async getApplicant(@Request() req) {
+  //   const user = await this.userSevices.getUsersRoleUser();
    
-    return   user ;
-  }
+  //   return   user ;
+  // }
+  // @ApiOkResponse({ type: User, isArray: true })
+  // @Get('interviewer')
+  // @UseGuards(JwtAuthGuard)
+  // async getInterviewer(@Request() req) {
+  //   const user = await this.userSevices.getUsersRoleInterviewer();
+   
+  //   return   user ;
+  // }
 }
