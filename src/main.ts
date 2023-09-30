@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-
+import * as donenv from 'dotenv';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
+donenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
@@ -17,6 +17,13 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(8080);
+  await app.listen(process.env.APP_PORT || 8080).then(() => {
+    console.log(`Server is running on port ${process.env.APP_PORT}`);
+    console.log(
+      `Documentation available at http://localhost:${
+        process.env.PORT_NUMBER || 8080
+      }/api`,
+    );
+  });
 }
 bootstrap();

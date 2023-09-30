@@ -1,16 +1,33 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  AutoIncrement,
+  Column,
+  DataType,
+  Default,
+  Model,
+  PrimaryKey,
+  Table,
+} from 'sequelize-typescript';
+import { UserType } from 'src/helpers';
 
-@Entity('user')
-export class User {
-  @PrimaryGeneratedColumn()
+@Table({ tableName: 'users', timestamps: true })
+export class User extends Model<User> {
+  @PrimaryKey
+  @AutoIncrement
+  @Column
   id: number;
 
-  @Column({type:'varchar', length:200})
+  @Column
   name: string;
 
-  @Column({type:'varchar', length:200, unique:true})
+  @Column
   email: string;
 
-  @Column({type:'varchar', length:200})
+  @Column
   image_url: string;
+
+  @Default(UserType.USER)
+  @Column({
+    type: DataType.ENUM(...Object.values(UserType)),
+  })
+  role: string;
 }
