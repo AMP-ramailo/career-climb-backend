@@ -2,12 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { CreateInterviewerDto } from './dto/create-interviewer.dto';
 import { UpdateInterviewerDto } from './dto/update-interviewer.dto';
 import { Interviewer } from './entities/interviewer.entity';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class InterviewerService {
   async create(createInterviewerDto: CreateInterviewerDto) {
     try {
       return await Interviewer.create(createInterviewerDto);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllInterviewers() {
+    try {
+      return await Interviewer.findAll({
+        attributes: { exclude: ['user_id', 'phone', 'dob'] },
+        include: [{ model: User, attributes: ['name', 'image_url'] }],
+      });
     } catch (error) {
       throw error;
     }

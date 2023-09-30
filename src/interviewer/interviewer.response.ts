@@ -10,3 +10,25 @@ export class InterviewerProfileResponse {
   @ApiProperty()
   price: number;
 }
+
+export class AllInterviewerResponse {
+  @ApiProperty()
+  experience: number;
+  @ApiProperty()
+  address: string;
+  @ApiProperty()
+  current_company: string;
+  @ApiProperty()
+  price: number;
+  @ApiProperty()
+  rating: number;
+  @ApiProperty({
+    type: 'object',
+
+    properties: {
+      name: { type: 'string' },
+      image_url: { type: 'string' },
+    },
+  })
+  user: number;
+}

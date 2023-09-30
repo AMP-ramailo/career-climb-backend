@@ -4,10 +4,12 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import { Interview } from 'src/interview/entities/interview.entity';
 import { User } from 'src/user/user.entity';
 
 @Table({ tableName: 'applicant_profile', timestamps: true })
@@ -49,4 +51,7 @@ export class Applicant extends Model<Applicant> {
 
   @BelongsTo(() => User)
   user: User;
+
+  @HasMany(() => Interview)
+  interviews: Interview[];
 }

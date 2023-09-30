@@ -9,3 +9,9 @@ export enum UserType {
   USER = 'user',
   INTERVIEWER = 'interviewer',
 }
+
+export enum InterviewStatus {
+  UPCOMING = 'Upcoming',
+  COMPLETED = 'Completed',
+  CANCELED = 'Canceled',
+}

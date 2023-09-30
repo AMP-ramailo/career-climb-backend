@@ -7,6 +7,7 @@ import { Applicant } from 'src/applicant/entities/applicant.entity';
 import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
 import { Skill } from 'src/skill/entities/skill.entity';
 import { UserSkill } from 'src/helpers/linking_entities/user-skill.entity';
+import { Interview } from 'src/interview/entities/interview.entity';
 export const databaseProviders = [
   {
     provide: SEQUELIZE,
@@ -33,6 +34,7 @@ export const databaseProviders = [
         Interviewer,
         Skill,
         UserSkill,
+        Interview,
       ]);
       await sequelize.sync({ alter: true });
       return sequelize;

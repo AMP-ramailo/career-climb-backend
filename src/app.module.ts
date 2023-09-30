@@ -7,9 +7,10 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { ApplicantModule } from './applicant/applicant.module';
 import { InterviewerModule } from './interviewer/interviewer.module';
 import { SkillModule } from './skill/skill.module';
+import { InterviewModule } from './interview/interview.module';
 
 @Module({
-  imports: [DatabaseModule, UserModule, ScheduleModule, ApplicantModule, InterviewerModule, SkillModule],
+  imports: [DatabaseModule, UserModule, ScheduleModule, ApplicantModule, InterviewerModule, SkillModule, InterviewModule],
   controllers: [AppController],
   providers: [AppService],
 })

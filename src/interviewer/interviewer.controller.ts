@@ -3,7 +3,10 @@ import { InterviewerService } from './interviewer.service';
 import { CreateInterviewerDto } from './dto/create-interviewer.dto';
 import { UpdateInterviewerDto } from './dto/update-interviewer.dto';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
-import { InterviewerProfileResponse } from './interviewer.response';
+import {
+  AllInterviewerResponse,
+  InterviewerProfileResponse,
+} from './interviewer.response';
 
 @ApiTags('interviewer-profile')
 @Controller('interviewer-profile')
@@ -13,6 +16,12 @@ export class InterviewerController {
   @Post()
   async create(@Body() createInterviewerDto: CreateInterviewerDto) {
     return this.interviewerService.create(createInterviewerDto);
+  }
+
+  @Get('get-all-interviewers')
+  @ApiOkResponse({ type: [AllInterviewerResponse] })
+  async getAllInterviewers() {
+    return this.interviewerService.getAllInterviewers();
   }
 
   @Get('get-profile/:user_id')
