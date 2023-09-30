@@ -2,7 +2,7 @@
 import { Controller, Get, Res, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.services';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 @ApiTags('auth')
 @Controller('google')
 export class AuthController {
