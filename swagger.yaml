@@ -1,0 +1,376 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/change-role": {
+      "post": {
+        "operationId": "UserController_changeUserRole",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/google": {
+      "get": {
+        "operationId": "AuthController_googleAuth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/google/redirect": {
+      "get": {
+        "operationId": "AuthController_googleAuthRedirect",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/interviewer-availability": {
+      "post": {
+        "operationId": "ScheduleController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      }
+    },
+    "/interviewer-availability/get-all-schedule/{interviewer_id}": {
+      "get": {
+        "operationId": "ScheduleController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      }
+    },
+    "/interviewer-availability/{id}": {
+      "get": {
+        "operationId": "ScheduleController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      },
+      "delete": {
+        "operationId": "ScheduleController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "interviewer-availability"
+        ]
+      }
+    },
+    "/applicant-profile": {
+      "post": {
+        "operationId": "ApplicantController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApplicantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "applicant-profile"
+        ]
+      }
+    },
+    "/applicant-profile/get-profile/{id}": {
+      "get": {
+        "operationId": "ApplicantController_getProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "applicant-profile"
+        ]
+      }
+    },
+    "/applicant-profile/get-social/{id}": {
+      "get": {
+        "operationId": "ApplicantController_getSocial",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "applicant-profile"
+        ]
+      }
+    },
+    "/applicant-profile/get-personal/{id}": {
+      "get": {
+        "operationId": "ApplicantController_getPersonal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "applicant-profile"
+        ]
+      }
+    },
+    "/applicant-profile/{id}": {
+      "patch": {
+        "operationId": "ApplicantController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApplicantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "applicant-profile"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Career Climb",
+    "description": "The Career Climb API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "CareerClimb",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "UpdateUserRoleDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "CreateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "availability_date": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "availability_time": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "interviewer_id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "availability_date",
+          "availability_time",
+          "status",
+          "interviewer_id"
+        ]
+      },
+      "CreateApplicantDto": {
+        "type": "object",
+        "properties": {
+          "experience": {
+            "type": "number"
+          },
+          "interview_count": {
+            "type": "number"
+          },
+          "dob": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "current_company": {
+            "type": "string"
+          },
+          "linkedin_url": {
+            "type": "string"
+          },
+          "github_url": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "user_id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "experience",
+          "interview_count",
+          "dob",
+          "address",
+          "phone",
+          "current_company",
+          "linkedin_url",
+          "github_url",
+          "rating",
+          "user_id"
+        ]
+      }
+    }
+  }
+}

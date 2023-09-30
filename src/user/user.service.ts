@@ -8,8 +8,13 @@ export class UsersService {
       where: { email },
     });
   }
-
+  async findById(id: number): Promise<User | null> {
+    return User.findOne({
+      where: { id },
+    });
+  }
   async createUser(user: Partial<User>): Promise<User> {
     return User.create(user);
   }
+
 }
