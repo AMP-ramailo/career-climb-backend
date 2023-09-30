@@ -7,14 +7,14 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('google')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  
+
   @Post()
   @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {}
+  async googleAuth(@Req() req: Request) {}
 
   @Get('redirect')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
-    return this.authService.googleLogin(req)
+  googleAuthRedirect(@Req() req: Request) {
+    return this.authService.googleLogin(req);
   }
 }
