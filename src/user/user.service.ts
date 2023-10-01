@@ -19,10 +19,14 @@ export class UsersService {
   async createUser(user: Partial<User>): Promise<User> {
     return User.create(user);
   }
+
   async getUsersRoleUser(): Promise<User[]> {
-    return User.findAll({where:{role : UserType.USER} , include: Applicant});
+    return User.findAll({ where: { role: UserType.USER }, include: Applicant });
   }
   async getUsersRoleInterviewer(): Promise<User[]> {
-    return User.findAll({where:{role : UserType.INTERVIEWER} , include: Interviewer});
+    return User.findAll({
+      where: { role: UserType.INTERVIEWER },
+      include: Interviewer,
+    });
   }
 }

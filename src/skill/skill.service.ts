@@ -35,9 +35,9 @@ export class SkillService {
   }
 
   async findAllSkillOfUser(user_id: number) {
-    const getAll = await UserSkill.findAll({
+    return await UserSkill.findAll({
       where: { user_id },
-      attributes: ['skill_id'],
+      attributes: ['skill_id', 'skill_experience'],
       include: [
         {
           model: Skill,
@@ -45,7 +45,6 @@ export class SkillService {
         },
       ],
     });
-    return getAll;
   }
 
   async update(skill_id: number, updateSkillDto: UpdateSkillDto) {

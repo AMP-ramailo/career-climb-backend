@@ -1,5 +1,14 @@
 // auth.controller.ts
-import { Controller, Post,Get, Body,Request, NotFoundException, UseGuards, UnauthorizedException  } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Request,
+  NotFoundException,
+  UseGuards,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ApiOkResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './user.service';
@@ -12,15 +21,19 @@ import { InterviewerService } from 'src/interviewer/interviewer.service';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userSevices: UsersService,
+  constructor(
+    private readonly userSevices: UsersService,
     private readonly applicantService: ApplicantService,
-    private readonly interviewerService: InterviewerService) {}
+    private readonly interviewerService: InterviewerService,
+  ) {}
 
   @Post('change-role')
   @UseGuards(JwtAuthGuard)
-  async changeUserRole(@Body() updateUserRoleDto:UpdateUserRoleDto,@Request() req) {
-    console.log('User ID:', req.user.id);
-    const userId = req.user.id; 
+  async changeUserRole(
+    @Body() updateUserRoleDto: UpdateUserRoleDto,
+    @Request() req,
+  ) {
+    const userId = req.user.id;
     const user = await this.userSevices.findById(userId); // Implement this function to find the user by ID
 
     if (!user) {
@@ -37,39 +50,44 @@ export class UserController {
   @Get('me')
   @UseGuards(JwtAuthGuard)
   async self(@Request() req) {
-    const userResponse :SelfResponseDto = new SelfResponseDto();
-  
-    userResponse.id= req.user.id;
-    userResponse.email= req.user.email;
+    const userResponse: SelfResponseDto = new SelfResponseDto();
+
+    userResponse.id = req.user.id;
+    userResponse.email = req.user.email;
     userResponse.name = req.user.name;
     userResponse.image_url = req.user.image_url;
     userResponse.role = req.user.role;
     userResponse.createAt = req.user.createdAt;
     userResponse.updateAt = req.user.updateAt;
-    if (req.user.role == UserType.USER){
-      const applicantProfile = await this.applicantService.getPersonalProfile(req.user.id)
-      if (applicantProfile){
+
+    if (req.user.role == UserType.USER) {
+      const applicantProfile = await this.applicantService.getPersonalProfile(
+        req.user.id,
+      );
+      if (applicantProfile) {
         userResponse.hasProfile = true;
-      }else{
+      } else {
         userResponse.hasProfile = false;
       }
-    }else {
-      const profile = await this.interviewerService.getPersonalProfile(req.user.id)
-      if (profile){
+    } else {
+      const profile = await this.interviewerService.getPersonalProfile(
+        req.user.id,
+      );
+      if (profile) {
         userResponse.hasProfile = true;
-      }else{
+      } else {
         userResponse.hasProfile = false;
       }
     }
-   
-    return   userResponse ;
+
+    return userResponse;
   }
   // @ApiOkResponse({ type: User, isArray: true })
   // @Get('applicant')
   // @UseGuards(JwtAuthGuard)
   // async getApplicant(@Request() req) {
   //   const user = await this.userSevices.getUsersRoleUser();
-   
+
   //   return   user ;
   // }
   // @ApiOkResponse({ type: User, isArray: true })
@@ -77,7 +95,7 @@ export class UserController {
   // @UseGuards(JwtAuthGuard)
   // async getInterviewer(@Request() req) {
   //   const user = await this.userSevices.getUsersRoleInterviewer();
-   
+
   //   return   user ;
   // }
 }

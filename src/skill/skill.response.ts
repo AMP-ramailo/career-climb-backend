@@ -13,5 +13,5 @@ export class UserSkillResponse {
   @ApiProperty()
   skill_name: string;
   @ApiProperty()
-  skill_experience: string;
+  skill_experience: number;
 }

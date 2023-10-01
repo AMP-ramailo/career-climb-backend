@@ -34,6 +34,7 @@ export class SkillController {
   @ApiParam({ name: 'user_id', required: true })
   @ApiOkResponse({ type: [UserSkillResponse] })
   findOne(@Param('user_id') user_id: string) {
+    console.log('hit here');
     return this.skillService.findAllSkillOfUser(+user_id);
   }
 
