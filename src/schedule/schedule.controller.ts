@@ -1,6 +1,9 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
-import { CreateScheduleDto } from './dto/create-schedule.dto';
+import {
+  BulkCreateScheduleDto,
+  CreateScheduleDto,
+} from './dto/create-schedule.dto';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('interviewer-availability')
@@ -10,15 +13,16 @@ export class ScheduleController {
 
   @Post()
   //add decorator to get the user detail
-  async create(@Body() createScheduleDto: CreateScheduleDto) {
+  async bulkCreate(@Body() bulkCreateScheduleDto: BulkCreateScheduleDto) {
     // createScheduleDto.interviewer_id=user.id
-    return await this.scheduleService.create(createScheduleDto);
+    return await this.scheduleService.bulkCreate(bulkCreateScheduleDto);
   }
 
   @Get('get-all-schedule/:interviewer_id')
   @ApiParam({ name: 'interviewer_id', required: true })
   @ApiOkResponse({ type: CreateScheduleDto, isArray: true })
-  async findAll(@Param() interviewer_id: number) {
+  async findAll(@Param('interviewer_id') interviewer_id: number) {
+    console.log('interviewer_id', interviewer_id);
     return await this.scheduleService.findAll(interviewer_id);
   }
 

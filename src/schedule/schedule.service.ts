@@ -1,6 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CreateScheduleDto } from './dto/create-schedule.dto';
-import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import {
+  BulkCreateScheduleDto,
+  CreateScheduleDto,
+} from './dto/create-schedule.dto';
 import { Schedule } from './entities/schedule.entity';
 import { Op } from 'sequelize';
 
@@ -31,6 +33,17 @@ export class ScheduleService {
     }
   }
 
+  async bulkCreate(bulkCreateScheduleDto: BulkCreateScheduleDto) {
+    try {
+      const { data } = bulkCreateScheduleDto;
+      // TODO: Check for validations
+
+      return await Schedule.bulkCreate(data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async findAll(interviewer_id: number) {
     return await Schedule.findAll({
       where: {
@@ -47,7 +60,7 @@ export class ScheduleService {
     });
   }
 
-  update(id: number, updateScheduleDto: UpdateScheduleDto) {
+  update(id: number) {
     return `This action updates a #${id} schedule`;
   }
 

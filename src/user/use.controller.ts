@@ -7,13 +7,11 @@ import {
   Request,
   NotFoundException,
   UseGuards,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { ApiOkResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './user.service';
 import { UpdateUserRoleDto } from './dto/role.dto';
-import { User } from './user.entity';
 import { UserType } from 'src/helpers/constants';
 import { ApplicantService } from 'src/applicant/applicant.service';
 import { SelfResponseDto } from './dto/self.dto';

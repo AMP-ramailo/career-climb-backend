@@ -10,3 +10,8 @@ export class CreateScheduleDto {
   @ApiProperty()
   interviewer_id?: number;
 }
+
+export class BulkCreateScheduleDto {
+  @ApiProperty({ type: [CreateScheduleDto] })
+  data: CreateScheduleDto[];
+}
