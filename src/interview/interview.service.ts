@@ -32,6 +32,34 @@ export class InterviewService {
       },
     });
   }
+  async getInterviewById(session_id: number) {
+    return await Interview.findOne({
+      where: {
+        session_id,
+      },
+      attributes: { exclude: ['payment_id'] },
+      include: [
+        {
+          model: Applicant,
+          attributes: [
+            'phone',
+            'github_url',
+            'linkedin_url',
+            'current_company',
+            'experience',
+          ],
+          include: [
+            { model: User, attributes: ['name', 'image_url', 'email'] },
+          ],
+        },
+        {
+          model: Interviewer,
+          attributes: ['price'],
+          include: [{ model: User, attributes: ['name'] }],
+        },
+      ],
+    });
+  }
 
   async getApplicantInterview(applicant_id: number) {
     return await Interview.findAll({
@@ -47,7 +75,7 @@ export class InterviewService {
     });
   }
 
-  update(id: number, updateInterviewDto: UpdateInterviewDto) {
+  update(id: number) {
     return `This action updates a #${id} interview`;
   }
 

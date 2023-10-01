@@ -45,6 +45,15 @@ export class InterviewerService {
       throw error;
     }
   }
+  async getProfileById(id: number) {
+    try {
+      return await Interviewer.findOne({
+        where: { id },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async update(user_id: number, updateInterviewerDto: UpdateInterviewerDto) {
     try {

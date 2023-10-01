@@ -19,3 +19,20 @@ export class CreateInterviewDto {
   @ApiProperty()
   applicant_id: number;
 }
+export class PayForInterViewDto {
+  @ApiProperty()
+  session_id: number;
+}
+export class KhaltiResponse {
+  @ApiProperty()
+  pidx: string;
+
+  @ApiProperty()
+  payment_url: string;
+
+  @ApiProperty()
+  expires_at: string;
+
+  @ApiProperty()
+  expires_in: string;
+}
