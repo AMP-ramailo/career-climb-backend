@@ -20,3 +20,27 @@ export class CreateInterviewerDto {
   @ApiProperty()
   user_id?: number;
 }
+
+export class GetInterviewerDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  experience?: number;
+  @ApiProperty()
+  interview_count?: number;
+  @ApiProperty()
+  dob?: Date;
+  @ApiProperty()
+  address?: string;
+  @ApiProperty()
+  phone?: string;
+  @ApiProperty()
+  current_company?: string;
+  @ApiProperty()
+  price?: number;
+  @ApiProperty()
+  rating?: number;
+  @ApiProperty()
+  user_id?: number;
+}

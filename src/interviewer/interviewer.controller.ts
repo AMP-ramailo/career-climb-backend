@@ -1,6 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { InterviewerService } from './interviewer.service';
-import { CreateInterviewerDto } from './dto/create-interviewer.dto';
+import {
+  CreateInterviewerDto,
+  GetInterviewerDto,
+} from './dto/create-interviewer.dto';
 import { UpdateInterviewerDto } from './dto/update-interviewer.dto';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import {
@@ -26,7 +29,7 @@ export class InterviewerController {
 
   @Get('get-profile/:user_id')
   @ApiParam({ name: 'user_id', required: true })
-  @ApiOkResponse({ type: CreateInterviewerDto })
+  @ApiOkResponse({ type: GetInterviewerDto })
   async getProfile(@Param('user_id') user_id: string) {
     return this.interviewerService.getProfile(+user_id);
   }

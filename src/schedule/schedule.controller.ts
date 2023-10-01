@@ -3,6 +3,7 @@ import { ScheduleService } from './schedule.service';
 import {
   BulkCreateScheduleDto,
   CreateScheduleDto,
+  GetInterviewScheduleDto,
 } from './dto/create-schedule.dto';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
@@ -20,9 +21,8 @@ export class ScheduleController {
 
   @Get('get-all-schedule/:interviewer_id')
   @ApiParam({ name: 'interviewer_id', required: true })
-  @ApiOkResponse({ type: CreateScheduleDto, isArray: true })
+  @ApiOkResponse({ type: GetInterviewScheduleDto, isArray: true })
   async findAll(@Param('interviewer_id') interviewer_id: number) {
-    console.log('interviewer_id', interviewer_id);
     return await this.scheduleService.findAll(interviewer_id);
   }
 

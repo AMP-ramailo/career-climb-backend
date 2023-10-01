@@ -9,6 +9,8 @@ import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
 @Injectable()
 export class InterviewService {
   async create(createInterviewDto: CreateInterviewDto) {
+    console.log('create', createInterviewDto);
+
     return await Interview.create(createInterviewDto);
   }
 

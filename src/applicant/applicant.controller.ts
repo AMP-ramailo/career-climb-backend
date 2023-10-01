@@ -1,6 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { ApplicantService } from './applicant.service';
-import { CreateApplicantDto } from './dto/create-applicant.dto';
+import {
+  CreateApplicantDto,
+  GetApplicantDto,
+} from './dto/create-applicant.dto';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   PersonalProfileResponse,
@@ -19,7 +22,7 @@ export class ApplicantController {
 
   @Get('get-profile/:user_id')
   @ApiParam({ name: 'user_id', required: true })
-  @ApiOkResponse({ type: CreateApplicantDto })
+  @ApiOkResponse({ type: GetApplicantDto })
   async getProfile(@Param('user_id') user_id: string) {
     return this.applicantService.getProfile(+user_id);
   }

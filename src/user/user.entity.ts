@@ -17,6 +17,7 @@ import { Applicant } from 'src/applicant/entities/applicant.entity';
 import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
 import { Skill } from 'src/skill/entities/skill.entity';
 import { UserSkill } from '../helpers/linking_entities/user-skill.entity';
+import { Interview } from 'src/interview/entities/interview.entity';
 
 @Table({ tableName: 'users', timestamps: true })
 export class User extends Model<User> {

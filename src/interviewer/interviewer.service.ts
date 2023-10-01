@@ -17,7 +17,7 @@ export class InterviewerService {
   async getAllInterviewers() {
     try {
       return await Interviewer.findAll({
-        attributes: { exclude: ['user_id', 'phone', 'dob'] },
+        attributes: { exclude: ['phone', 'dob'] },
         include: [{ model: User, attributes: ['name', 'image_url'] }],
       });
     } catch (error) {

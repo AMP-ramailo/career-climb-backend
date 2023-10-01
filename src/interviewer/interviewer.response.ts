@@ -15,6 +15,8 @@ export class AllInterviewerResponse {
   @ApiProperty()
   experience: number;
   @ApiProperty()
+  user_id: number;
+  @ApiProperty()
   address: string;
   @ApiProperty()
   current_company: string;
