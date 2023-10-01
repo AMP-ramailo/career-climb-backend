@@ -10,7 +10,15 @@ import { SkillModule } from './skill/skill.module';
 import { InterviewModule } from './interview/interview.module';
 
 @Module({
-  imports: [DatabaseModule, UserModule, ScheduleModule, ApplicantModule, InterviewerModule, SkillModule, InterviewModule],
+  imports: [
+    DatabaseModule,
+    UserModule,
+    ScheduleModule,
+    ApplicantModule,
+    InterviewerModule,
+    SkillModule,
+    InterviewModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

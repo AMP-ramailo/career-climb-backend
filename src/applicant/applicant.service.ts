@@ -43,6 +43,15 @@ export class ApplicantService {
       throw error;
     }
   }
+  async getProfileById(id: number) {
+    try {
+      return await Applicant.findOne({
+        where: { id },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async update(user_id: number, createApplicantDto: CreateApplicantDto) {
     try {

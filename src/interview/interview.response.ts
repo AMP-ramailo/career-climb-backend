@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class InterviewerResponse {
   @ApiProperty()
+  session_id: number;
+
+  @ApiProperty()
   interview_date: Date;
 
   @ApiProperty()
@@ -42,6 +45,9 @@ export class InterviewerResponse {
 }
 
 export class ApplicantResponse {
+  @ApiProperty()
+  session_id: number;
+
   @ApiProperty()
   interview_date: Date;
 
