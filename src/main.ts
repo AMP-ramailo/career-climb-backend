@@ -3,6 +3,9 @@ import { AppModule } from './app.module';
 import * as donenv from 'dotenv';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { SkillService } from './skill/skill.service';
+import { Interviewer } from './interviewer/entities/interviewer.entity';
+import { InterviewerService } from './interviewer/interviewer.service';
+import { interviewerSeed } from './interviewer/interviewer.seed';
 donenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -19,6 +22,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   const seedSkill = app.get(SkillService);
   await seedSkill.seedData();
+  const checkInterviewer = await app
+    .get(InterviewerService)
+    .countInterviewers();
+  if (checkInterviewer < 10) await interviewerSeed();
   SwaggerModule.setup('api', app, document);
   await app.listen(process.env.APP_PORT || 8080).then(() => {
     console.log(`Server is running on port ${process.env.APP_PORT}`);

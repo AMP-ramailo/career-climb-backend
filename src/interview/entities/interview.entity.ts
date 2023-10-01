@@ -4,11 +4,13 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasOne,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 import { Applicant } from 'src/applicant/entities/applicant.entity';
+import { Feedback } from 'src/feedback/entities/feedback.entity';
 import { InterviewStatus } from 'src/helpers';
 import { Interviewer } from 'src/interviewer/entities/interviewer.entity';
 
@@ -44,4 +46,7 @@ export class Interview extends Model<Interview> {
 
   @BelongsTo(() => Applicant)
   applicant: Applicant;
+
+  @HasOne(() => Feedback)
+  feedback: Feedback;
 }

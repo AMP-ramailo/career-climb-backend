@@ -14,7 +14,7 @@ dotenv.config();
     PassportModule.register({ defaultStrategy: 'google' }),
     JwtModule.register({
       secret: `${process.env.TOKEN_SECRET}`,
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '10d' },
     }),
   ],
 

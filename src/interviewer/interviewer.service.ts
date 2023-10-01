@@ -14,6 +14,13 @@ export class InterviewerService {
     }
   }
 
+  async countInterviewers() {
+    try {
+      return Interviewer.count();
+    } catch (error) {
+      throw error;
+    }
+  }
   async getAllInterviewers() {
     try {
       return await Interviewer.findAll({

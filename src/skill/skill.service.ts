@@ -4,6 +4,7 @@ import { UpdateSkillDto } from './dto/update-skill.dto';
 import { Skill } from './entities/skill.entity';
 import { UserSkill } from 'src/helpers/linking_entities/user-skill.entity';
 import { skillData } from './skill.seeder';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class SkillService {
@@ -35,16 +36,14 @@ export class SkillService {
   }
 
   async findAllSkillOfUser(user_id: number) {
-    return await UserSkill.findAll({
-      where: { user_id },
-      attributes: ['skill_id', 'skill_experience'],
-      include: [
-        {
-          model: Skill,
-          attributes: ['skill_name'],
-        },
-      ],
-    });
+    const allSkills = (
+      await UserSkill.sequelize.query(
+        `SELECT us.skill_id, s.skill_name, us.skill_experience ` +
+          `FROM user_skill us LEFT JOIN skills s ON us.skill_id = s.skill_id ` +
+          `where us.user_id=${user_id};`,
+      )
+    )[0];
+    return allSkills;
   }
 
   async update(skill_id: number, updateSkillDto: UpdateSkillDto) {
