@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { InterviewService } from './interview.service';
 import {
+  CheckForPaymentDto,
   CreateInterviewDto,
   KhaltiResponse,
   PayForInterViewDto,
@@ -39,10 +40,10 @@ export class InterviewController {
       const label = `One on One Interview Session  ${session.interviewer.user.name} x ${session.applicant.user.name}`;
       const price = (session.interviewer.price ?? 500) * 100;
       const data = {
-        return_url: 'https://localhost:3000/applicant/payment-success/',
-        website_url: 'https://localhost:3000',
+        return_url: 'http://localhost:3000/applicant/payment-success/',
+        website_url: 'http://localhost:3000',
         amount: price,
-        purchase_order_id: 'test12',
+        purchase_order_id: payForInterviewDto.session_id,
         purchase_order_name: label,
         customer_info: {
           name: session.applicant.user.name,
@@ -77,6 +78,39 @@ export class InterviewController {
         });
 
         return res.data;
+      } catch (err) {
+        throw new Error(err);
+        // console.log('errors', JSON.stringify(err));
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  @Post('check-for-payment')
+  @ApiOkResponse({ type: KhaltiResponse })
+  async checkPayment(@Body() checkForPaymentDto: CheckForPaymentDto) {
+    try {
+      const data = {
+        pidx: checkForPaymentDto.pidx,
+      };
+      const headers = {
+        Authorization: `Key ${KHALTI_SECRET_KEY}`,
+        'Content-Type': 'application/json',
+      };
+
+      try {
+        const res = await axios.post(`${KHALTI_URL}/epayment/lookup/`, data, {
+          headers,
+        });
+
+        if (res.data.status === 'Completed') {
+          const d = await this.interviewService.updatePaymentMethod(
+            checkForPaymentDto.session_id,
+          );
+          return d;
+        }
+        throw new Error('error'); //TODO: kaam chalaau
       } catch (err) {
         throw new Error(err);
         // console.log('errors', JSON.stringify(err));

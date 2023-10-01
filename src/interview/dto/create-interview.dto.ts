@@ -23,6 +23,14 @@ export class PayForInterViewDto {
   @ApiProperty()
   session_id: number;
 }
+
+export class CheckForPaymentDto {
+  @ApiProperty()
+  session_id: number;
+
+  @ApiProperty()
+  pidx: string;
+}
 export class KhaltiResponse {
   @ApiProperty()
   pidx: string;

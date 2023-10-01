@@ -8,6 +8,9 @@ export class InterviewerResponse {
   interview_date: Date;
 
   @ApiProperty()
+  payment_id: string;
+
+  @ApiProperty()
   interview_time: number;
 
   @ApiProperty()
@@ -47,6 +50,9 @@ export class InterviewerResponse {
 export class ApplicantResponse {
   @ApiProperty()
   session_id: number;
+
+  @ApiProperty()
+  payment_id: string;
 
   @ApiProperty()
   interview_date: Date;

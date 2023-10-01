@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateInterviewDto } from './dto/create-interview.dto';
-import { UpdateInterviewDto } from './dto/update-interview.dto';
 import { Interview } from './entities/interview.entity';
 import { Applicant } from 'src/applicant/entities/applicant.entity';
 import { User } from 'src/user/user.entity';
@@ -19,7 +18,7 @@ export class InterviewService {
       where: {
         interviewer_id,
       },
-      attributes: { exclude: ['payment_id', 'applicant_id'] },
+      attributes: { exclude: ['applicant_id'] },
       include: {
         model: Applicant,
         attributes: [
@@ -37,7 +36,6 @@ export class InterviewService {
       where: {
         session_id,
       },
-      attributes: { exclude: ['payment_id'] },
       include: [
         {
           model: Applicant,
@@ -66,7 +64,7 @@ export class InterviewService {
       where: {
         applicant_id,
       },
-      attributes: { exclude: ['payment_id', 'interviewer_id'] },
+      attributes: { exclude: ['interviewer_id'] },
       include: {
         model: Interviewer,
         attributes: ['current_company', 'experience'],
@@ -75,6 +73,18 @@ export class InterviewService {
     });
   }
 
+  async updatePaymentMethod(session_id: number) {
+    return await Interview.update(
+      {
+        payment_id: 'COMPLETED', // todo: kaam chalaau
+      },
+      {
+        where: {
+          session_id,
+        },
+      },
+    );
+  }
   update(id: number) {
     return `This action updates a #${id} interview`;
   }
