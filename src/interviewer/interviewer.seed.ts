@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Interviewer } from './entities/interviewer.entity';
 import { User } from 'src/user/user.entity';
+import { Schedule } from 'src/schedule/entities/schedule.entity';
 
 export const interviewerSeed = async () => {
   try {
@@ -36,9 +37,36 @@ export const interviewerSeed = async () => {
         user_id: newUser.id,
       });
 
+      const randomDate = faker.date.future(); // Generate a random future date
+      const randomTime = await generateNumberWithPattern();
+      const randomStatus = faker.number.int({ min: 0, max: 1 }); // Random true or false
+
+      // Create an instance of the Schedule model with random data
+      await Schedule.create({
+        availability_date: randomDate,
+        availability_time: randomTime,
+        status: trueOrFalse(randomStatus),
+        interviewer_id: newUser.id,
+      });
+
       console.log(`Created Interviewer with ID ${newInterviewer.id}`);
     }
   } catch (error) {
     console.error('Error seeding data:', error);
   }
 };
+
+async function generateNumberWithPattern() {
+  const initial = faker.number.int({ min: 0, max: 23 });
+  const later = faker.number.int({ min: 0, max: 59 });
+
+  const initialString = '' + initial;
+  const laterString = later < 10 ? `0${later}` : `${later}`;
+
+  const finalTime = initialString + laterString;
+  return +finalTime;
+}
+
+function trueOrFalse(value: number) {
+  return value === 0 ? false : true;
+}
