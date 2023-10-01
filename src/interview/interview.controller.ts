@@ -89,7 +89,7 @@ export class InterviewController {
   @Get('interviewer-interviews/:interviewer_id')
   @ApiParam({ name: 'interviewer_id', required: true })
   @ApiOkResponse({ type: [InterviewerResponse] })
-  getInterviewerInterview(interviewer_id: string) {
+  getInterviewerInterview(@Param('interviewer_id') interviewer_id: string) {
     return this.interviewService.getInterviewerInterview(+interviewer_id);
   }
 
